@@ -5,7 +5,7 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.4"
     },
-    "license": "Apache-2",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Eduardo Aguilar Yépez",
