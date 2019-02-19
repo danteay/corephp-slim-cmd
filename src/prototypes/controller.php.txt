@@ -1,0 +1,39 @@
+<?php
+
+namespace Controllers{{namespace}};
+
+use Slim\Http\Request;
+use Slim\Http\Response;
+use Base\BaseController;
+use Interop\Container\ContainerInterface;
+
+class {{className}} extends BaseController
+{
+    /**
+     * StoresController Constructor
+     *
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
+
+    /**
+     * Main method controller
+     *
+     * @param Request  $req  The incoming request
+     * @param Response $res  The HTTP response
+     * @param array    $args Url rest arguments
+     *
+     * @return Response The HTTP response
+     */
+    public function index(Request $req, Response $res, $args)
+    {
+        return $res->withJson([
+            'code' => 200,
+            'message' => 'Ok',
+            'status' => 'success'
+        ], 200);
+    }
+}

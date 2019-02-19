@@ -1,7 +1,7 @@
 {
     "name": "corephp/slim-cmd",
     "description": "A simple command lione tool to create Slim framework projects",
-    "version": "0.0.0.1",
+    "version": "0.0.1.0",
     "type": "project",
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.4"

@@ -23,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * NewProjectCommand
  *
- * @category  Class
+ * @category  Command
  * @package   CorePHP_Slim_Cmd
  * @author    Eduardo Aguilar <dante.aguilar41@gmail.com>
  * @copyright 2019 Eduardo Aguilar
