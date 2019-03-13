@@ -1,0 +1,10 @@
+<?php
+
+namespace Models;
+
+use CorePHP\Slim\Dependency\Database\Model;
+
+class {{className}} extends Model
+{
+    protected $table = '{{tableName}}';
+}

@@ -30,7 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @license   https://github.com/danteay/corephp-slim-cmd/LICENSE Apache-2.0
  * @link      https://github.com/danteay/corephp-slim-cmd
  */
-class NewProjectCommand extends Command
+class AppInitCommand extends Command
 {
     /**
      * Command name

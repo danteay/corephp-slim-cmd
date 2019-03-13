@@ -14,7 +14,6 @@
 
 namespace CorePHP\Slim\Console;
 
-use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -69,9 +68,40 @@ class NewModelCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $pathFile = getcwd() . '/src/app/models';
         $className = ucfirst($input->getArgument('className'));
         $tableName = $input->getArgument('tableName');
+
+        $depends = file_get_contents(getcwd() . '/composer.json');
+
+        if (preg_match('/corephp\/slim-eloquent/', $depends)) {
+            $this->eloquentModel($className, $tableName);
+        } else if (preg_match('/corephp\/slim-doctrine/', $depends)) {
+            throw new \RuntimeException(
+                "Module not implemented. It'll be available soon.."
+            );
+        } else {
+            throw new \RuntimeException(
+                "No ORM dependency detected. \n" .
+                "For Eloquent ORM you should install corephp/slim-eloquent",
+                1
+            );
+
+        }
+
+        $output->writeln("<info>Model $className created...</info>");
+    }
+
+    /**
+     * Generate an eloquent Model
+     *
+     * @param string $className Class name of the file
+     * @param string $tableName Related table name
+     *
+     * @return void
+     */
+    private function eloquentModel($className, $tableName)
+    {
+        $pathFile = getcwd() . '/src/app/models';
 
         $fileName = $pathFile . '/' . $className . '.php';
 
@@ -83,12 +113,10 @@ class NewModelCommand extends Command
             throw new \RuntimeException("Model $className allready exists...");
         }
 
-        $prototype = file_get_contents(__DIR__ . '/prototypes/model.php.txt');
+        $prototype = file_get_contents(__DIR__ . '/prototypes/eloquent-model.php.txt');
         $prototype = str_replace('{{className}}', $className, $prototype);
         $prototype = str_replace('{{tableName}}', $tableName, $prototype);
 
         file_put_contents($pathFile . '/' . $className . '.php', $prototype);
-
-        $output->writeln("<info>Model $className created...</info>");
     }
 }
