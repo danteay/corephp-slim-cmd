@@ -37,7 +37,7 @@ class NewControllerCommand extends Command
      *
      * @var string
      */
-    protected static $defaultName = 'new:controller';
+    protected static $defaultName = 'controller:new';
 
     /**
      * Configure the command options.
@@ -46,7 +46,7 @@ class NewControllerCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription('Create a new project Model')
+        $this->setDescription('Create a new project Controller')
             ->addArgument(
                 'className',
                 InputArgument::REQUIRED,

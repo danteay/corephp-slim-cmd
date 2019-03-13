@@ -1,0 +1,12 @@
+<?php
+
+use CorePHP\Slim\Dependency\Database\Eloquent;
+
+return function ($container) {
+    $settings = $container->get('eloquent');
+
+    $eloquent = new Eloquent();
+    $eloquent->addConnection($settings);
+
+    return $eloquent->getManager();
+};

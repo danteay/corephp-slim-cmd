@@ -1,6 +1,6 @@
 <?php
 /**
- * New project command for Slim
+ * Add new dependency for slim
  *
  * PHP Version 7.1
  *
@@ -20,27 +20,28 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use CorePHP\Slim\Console\Commons\Commons;
+use CorePHP\Slim\Console\Helpers\Dependencies\Database\Eloquent\Dependency as EloquentDependency;
 
 /**
- * NewProjectCommand
+ * AddDependencyCommand
  *
- * @category  Command
+ * @category  class
  * @package   CorePHP_Slim_Cmd
  * @author    Eduardo Aguilar <dante.aguilar41@gmail.com>
  * @copyright 2019 Eduardo Aguilar
  * @license   https://github.com/danteay/corephp-slim-cmd/LICENSE Apache-2.0
  * @link      https://github.com/danteay/corephp-slim-cmd
  */
-class AppInitCommand extends Command
+class AddDependencyCommand extends Command
 {
     use Commons;
-    
+
     /**
      * Command name
      *
      * @var string
      */
-    protected static $defaultName = 'app:init';
+    protected static $defaultName = 'dependency:add';
 
     /**
      * Configure the command options.
@@ -49,11 +50,11 @@ class AppInitCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription('Create a new Slim project')
+        $this->setDescription('Add a new project dependency')
             ->addArgument(
-                'projectdir',
+                'dependency',
                 InputArgument::REQUIRED,
-                'The username of the user.'
+                'Dependency name'
             );
     }
 
@@ -67,41 +68,20 @@ class AppInitCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $directory = getcwd() . '/' . $input->getArgument('projectdir');
-        $output->writeln('<info>Creating project: '. $directory . '</info>');
+        $output->writeln('<info>Installing dependency... </info>');
 
-        $this->verifyApplicationDoesntExist($directory);
+        switch ($input->getArgument('dependency')) {
+            case 'eloquent':
+                (new EloquentDependency($output))->setUp();
+                break;
 
-        $composer = $this->findComposer();
-
-        $commands = [
-            $composer,
-            'create-project',
-            'corephp/slim-scafold',
-            $directory
-        ];
-
-        $process = new Process($commands, null, null, null, null);
-        $process->run(
-            function ($type, $line) use ($output) {
-                $output->write($line);
-            }
-        );
-
-        $output->writeln('<comment>Project is allready installed!!</comment>');
-    }
-
-    /**
-     * Verify that the application does not already exist.
-     *
-     * @param string $directory Directory path to evaluate
-     *
-     * @return void
-     */
-    protected function verifyApplicationDoesntExist($directory)
-    {
-        if (is_dir($directory)) {
-            throw new \RuntimeException('Application already exists: '.$directory);
+            default:
+                throw new \RuntimeException(
+                    "Invalid dependency. Chose one of the next available dependencies \n" .
+                    "[-] eloquent"
+                );
         }
+
+        $output->writeln('<info>Dependency added successfuly...</info>');
     }
 }

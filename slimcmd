@@ -11,5 +11,6 @@ $app = new Symfony\Component\Console\Application('CorePHP Slim Framework install
 $app->add(new CorePHP\Slim\Console\AppInitCommand);
 $app->add(new CorePHP\Slim\Console\NewModelCommand);
 $app->add(new CorePHP\Slim\Console\NewControllerCommand);
+$app->add(new CorePHP\Slim\Console\AddDependencyCommand);
 
 $app->run();

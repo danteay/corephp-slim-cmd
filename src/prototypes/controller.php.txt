@@ -4,10 +4,9 @@ namespace Controllers{{namespace}};
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Base\BaseController;
 use Interop\Container\ContainerInterface;
 
-class {{className}} extends BaseController
+class {{className}} extends Controller
 {
     /**
      * StoresController Constructor

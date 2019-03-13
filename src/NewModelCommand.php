@@ -18,6 +18,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use CorePHP\Slim\Console\Helpers\Dependencies\Database\Eloquent\Model as EloquentModel;
 
 /**
  * NewModelCommand
@@ -36,7 +37,7 @@ class NewModelCommand extends Command
      *
      * @var string
      */
-    protected static $defaultName = 'new:model';
+    protected static $defaultName = 'model:new';
 
     /**
      * Configure the command options.
@@ -74,7 +75,7 @@ class NewModelCommand extends Command
         $depends = file_get_contents(getcwd() . '/composer.json');
 
         if (preg_match('/corephp\/slim-eloquent/', $depends)) {
-            $this->eloquentModel($className, $tableName);
+            (new EloquentModel($className, $tableName))->build();
         } else if (preg_match('/corephp\/slim-doctrine/', $depends)) {
             throw new \RuntimeException(
                 "Module not implemented. It'll be available soon.."

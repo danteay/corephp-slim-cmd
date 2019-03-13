@@ -1,0 +1,6 @@
+        // Eloquent Database connection
+        "eloquent" => CorePHP\Slim\Dependency\Database\Parser::parseConnection(
+            getenv('DATABASE_URL')
+        ),
+
+        #NEW_SETTINGS
